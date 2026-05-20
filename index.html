@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<!-- ================================================ -->
+<!-- LINHA 3: COLE AQUI A URL DO APPS SCRIPT ABAIXO -->
+<!-- ================================================ -->
+<script>var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbznIGDG31TjOB1bCoPf3qZn4ixuZRItakdmn50T__6utYzUZ41CV0bkPRRJ1ZweLSDW/exec";</script>
+<!-- ================================================ -->
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seja Voluntário — Aliança do Bem</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green-dark:  #1B4332;
+  --green-main:  #2D6A4F;
+  --green-mid:   #52B788;
+  --green-light: #D8F3DC;
+  --green-pale:  #F0FAF4;
+  --amber:       #E76F51;
+  --amber-light: #FEF0EB;
+  --dark:        #111827;
+  --gray:        #6B7280;
+  --border:      #D1FAE5;
+  --white:       #FFFFFF;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: #F6FBF8;
+  color: var(--dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--green-dark);
+  padding: 64px 24px 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, #2D6A4F 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-paws {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  opacity: .5;
+}
+.hero-paws span {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green-mid);
+  animation: pulse 2s ease-in-out infinite;
+}
+.hero-paws span:nth-child(2) { animation-delay: .3s; }
+.hero-paws span:nth-child(3) { animation-delay: .6s; }
+@keyframes pulse { 0%,100%{opacity:.4;transform:scale(1)} 50%{opacity:1;transform:scale(1.4)} }
+
+.hero-label {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--green-mid);
+  margin-bottom: 14px;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 6vw, 46px);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 18px;
+  position: relative;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--green-mid);
+}
+.hero p {
+  font-size: 15px;
+  color: rgba(255,255,255,.65);
+  line-height: 1.75;
+  max-width: 520px;
+  margin: 0 auto 32px;
+}
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+}
+.stat-label {
+  font-size: 11px;
+  color: rgba(255,255,255,.45);
+  margin-top: 2px;
+}
+.hero-curve {
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 40px;
+  background: #F6FBF8;
+  clip-path: ellipse(55% 100% at 50% 100%);
+}
+
+/* ── FORM CONTAINER ── */
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+/* ── PROGRESS ── */
+.progress-wrap {
+  margin-bottom: 36px;
+}
+.progress-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 10px;
+}
+.step-dot {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--gray);
+  font-size: 12px;
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .3s;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.step-dot.active {
+  background: var(--green-main);
+  color: var(--white);
+  box-shadow: 0 0 0 4px rgba(82,183,136,.2);
+}
+.step-dot.done {
+  background: var(--green-mid);
+  color: var(--white);
+}
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  transition: background .3s;
+}
+.step-line.done { background: var(--green-mid); }
+.step-labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2px;
+}
+.step-labels span {
+  font-size: 10px;
+  color: var(--gray);
+  font-weight: 500;
+  text-align: center;
+  flex: 1;
+}
+.step-labels span:first-child { text-align: left; }
+.step-labels span:last-child { text-align: right; }
+
+/* ── CARD ── */
+.form-card {
+  background: var(--white);
+  border-radius: 20px;
+  border: 1px solid #E8F5ED;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(45,106,79,.07);
+}
+.section {
+  display: none;
+  padding: 36px 32px;
+  animation: fadeUp .35s ease;
+}
+.section.visible { display: block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+  margin-bottom: 28px;
+}
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--green-main);
+  margin-bottom: 8px;
+}
+.section-tag span { font-size: 14px; }
+.section-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--dark);
+  line-height: 1.25;
+  margin-bottom: 6px;
+}
+.section-sub {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* ── FIELDS ── */
+.field { margin-bottom: 20px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width:560px) { .field-row { grid-template-columns: 1fr; } }
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--dark);
+  margin-bottom: 7px;
+}
+label .req { color: var(--amber); margin-left: 2px; }
+label .hint { font-weight: 400; color: var(--gray); font-size: 12px; }
+
+input[type=text],
+input[type=email],
+input[type=tel],
+select,
+textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid #E0EDE5;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--dark);
+  background: var(--white);
+  transition: border-color .2s, box-shadow .2s;
+  outline: none;
+  appearance: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--green-mid);
+  box-shadow: 0 0 0 3px rgba(82,183,136,.15);
+}
+input.error, select.error, textarea.error {
+  border-color: var(--amber);
+}
+.error-msg {
+  font-size: 11px;
+  color: var(--amber);
+  margin-top: 4px;
+  display: none;
+}
+.error-msg.show { display: block; }
+textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 40px; }
+
+/* ── CHECKBOX/RADIO CARDS ── */
+.check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.check-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+@media(max-width:480px) {
+  .check-grid, .check-grid.three { grid-template-columns: 1fr; }
+}
+.check-card {
+  position: relative;
+}
+.check-card input[type=checkbox],
+.check-card input[type=radio] {
+  position: absolute;
+  opacity: 0;
+  width: 0; height: 0;
+}
+.check-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1.5px solid #E0EDE5;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .2s;
+  user-select: none;
+}
+.check-label:hover { border-color: var(--green-mid); background: var(--green-pale); }
+.check-card input:checked + .check-label {
+  border-color: var(--green-main);
+  background: var(--green-pale);
+}
+.check-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.check-text {}
+.check-title { font-size: 13px; font-weight: 500; color: var(--dark); line-height: 1.3; }
+.check-desc { font-size: 11px; color: var(--gray); margin-top: 2px; line-height: 1.4; }
+
+/* ── AVAIL GRID ── */
+.avail-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+@media(max-width:480px) { .avail-grid { grid-template-columns: repeat(2, 1fr); } }
+.avail-card { position: relative; }
+.avail-card input { position: absolute; opacity:0; width:0; height:0; }
+.avail-label {
+  display: block;
+  text-align: center;
+  padding: 10px 6px;
+  border: 1.5px solid #E0EDE5;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all .2s;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray);
+}
+.avail-label:hover { border-color: var(--green-mid); color: var(--green-main); }
+.avail-card input:checked + .avail-label {
+  border-color: var(--green-main);
+  background: var(--green-pale);
+  color: var(--green-main);
+}
+
+/* ── LEVEL SLIDER ── */
+.level-options { display: flex; gap: 8px; }
+.level-opt { flex: 1; position: relative; }
+.level-opt input { position: absolute; opacity:0; width:0; height:0; }
+.level-label {
+  display: block;
+  text-align: center;
+  padding: 9px 4px;
+  border: 1.5px solid #E0EDE5;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray);
+  transition: all .2s;
+}
+.level-opt input:checked + .level-label {
+  border-color: var(--green-main);
+  background: var(--green-pale);
+  color: var(--green-main);
+}
+
+/* ── DIVIDER ── */
+.field-divider {
+  border: none;
+  border-top: 1px solid #F0F0F0;
+  margin: 28px 0;
+}
+
+/* ── BUTTONS ── */
+.btn-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 32px 28px;
+  border-top: 1px solid #F4F4F4;
+  gap: 12px;
+}
+.btn-back {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 16px;
+  border-radius: 8px;
+  transition: all .2s;
+}
+.btn-back:hover { background: #F4F4F4; color: var(--dark); }
+.btn-back:disabled { opacity: 0; pointer-events: none; }
+.btn-next {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--white);
+  background: var(--green-main);
+  border: none;
+  cursor: pointer;
+  padding: 12px 28px;
+  border-radius: 10px;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.btn-next:hover { background: var(--green-dark); transform: translateY(-1px); }
+.btn-next:active { transform: translateY(0); }
+.btn-submit {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--white);
+  background: var(--amber);
+  border: none;
+  cursor: pointer;
+  padding: 14px 32px;
+  border-radius: 10px;
+  transition: all .2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-submit:hover { background: #D15F3F; transform: translateY(-1px); }
+
+/* ── SUCCESS ── */
+.success {
+  display: none;
+  text-align: center;
+  padding: 60px 32px;
+  animation: fadeUp .5s ease;
+}
+.success.visible { display: block; }
+.success-icon {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--green-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+  margin: 0 auto 24px;
+}
+.success h2 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 12px;
+}
+.success p {
+  font-size: 15px;
+  color: var(--gray);
+  line-height: 1.7;
+  max-width: 420px;
+  margin: 0 auto 28px;
+}
+.success-share {
+  font-size: 13px;
+  color: var(--green-main);
+  font-weight: 500;
+}
+
+/* ── FOOTER ── */
+.form-footer {
+  text-align: center;
+  margin-top: 32px;
+  font-size: 12px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+.form-footer a { color: var(--green-main); text-decoration: none; }
+
+/* ── CHAR COUNTER ── */
+.char-counter { font-size: 11px; color: var(--gray); text-align: right; margin-top: 4px; }
+
+/* ── SCROLL PROGRESS ── */
+.scroll-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: var(--green-mid);
+  width: 0%;
+  transition: width .3s;
+  z-index: 100;
+}
+</style>
+</head>
+<body>
+
+<div class="scroll-bar" id="scrollBar"></div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-paws">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="hero-label">Junte-se a nós</div>
+  <h1>Seja <em>Voluntário</em><br>da Aliança do Bem</h1>
+  <p>Cada talento conta. Cada hora doada transforma uma vida. Venha fazer parte do time que já resgatou mais de 300 animais e criou um movimento de amor em Campinas.</p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">300+</div>
+      <div class="stat-label">Animais resgatados</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">730+</div>
+      <div class="stat-label">Animais adotados</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2.270+</div>
+      <div class="stat-label">Castrações realizadas</div>
+    </div>
+  </div>
+  <div class="hero-curve"></div>
+</div>
+
+<div class="container">
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-steps" id="progressSteps">
+      <div class="step-dot active" id="dot-1">1</div>
+      <div class="step-line" id="line-1"></div>
+      <div class="step-dot" id="dot-2">2</div>
+      <div class="step-line" id="line-2"></div>
+      <div class="step-dot" id="dot-3">3</div>
+      <div class="step-line" id="line-3"></div>
+      <div class="step-dot" id="dot-4">4</div>
+    </div>
+    <div class="step-labels">
+      <span>Quem é você</span>
+      <span>Seus talentos</span>
+      <span>Como ajudar</span>
+      <span>Disponibilidade</span>
+    </div>
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="form-card">
+
+    <!-- SEÇÃO 1 — DADOS PESSOAIS -->
+    <div class="section visible" id="sec-1">
+      <div class="section-header">
+        <div class="section-tag"><span>👋</span> Passo 1 de 4</div>
+        <div class="section-title">Vamos nos conhecer?</div>
+        <div class="section-sub">Conte um pouco sobre você para que possamos entender melhor como trabalharemos juntos.</div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Nome completo <span class="req">*</span></label>
+          <input type="text" id="nome" placeholder="Seu nome">
+          <div class="error-msg" id="err-nome">Por favor, informe seu nome.</div>
+        </div>
+        <div class="field">
+          <label>Cidade onde mora <span class="req">*</span></label>
+          <input type="text" id="cidade" placeholder="Ex: Campinas">
+          <div class="error-msg" id="err-cidade">Por favor, informe sua cidade.</div>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>E-mail <span class="req">*</span></label>
+          <input type="email" id="email" placeholder="seu@email.com">
+          <div class="error-msg" id="err-email">Informe um e-mail válido.</div>
+        </div>
+        <div class="field">
+          <label>WhatsApp <span class="req">*</span></label>
+          <input type="tel" id="whatsapp" placeholder="(19) 99999-9999">
+          <div class="error-msg" id="err-whatsapp">Informe seu WhatsApp.</div>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Idade <span class="req">*</span></label>
+          <select id="idade">
+            <option value="">Selecione</option>
+            <option>14 a 17 anos</option>
+            <option>18 a 24 anos</option>
+            <option>25 a 34 anos</option>
+            <option>35 a 44 anos</option>
+            <option>45 a 54 anos</option>
+            <option>55 anos ou mais</option>
+          </select>
+          <div class="error-msg" id="err-idade">Selecione sua faixa etária.</div>
+        </div>
+        <div class="field">
+          <label>Como nos encontrou?</label>
+          <select id="origem">
+            <option value="">Selecione</option>
+            <option>Instagram</option>
+            <option>TikTok</option>
+            <option>LinkedIn</option>
+            <option>YouTube</option>
+            <option>Indicação de amigo</option>
+            <option>Evento presencial</option>
+            <option>Site da ONG</option>
+            <option>Outro</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Você tem pets? <span class="hint">(opcional)</span></label>
+        <div class="level-options">
+          <div class="level-opt">
+            <input type="radio" name="pets" id="pets-sim" value="Sim, tenho pets">
+            <label class="level-label" for="pets-sim">🐾 Sim, tenho</label>
+          </div>
+          <div class="level-opt">
+            <input type="radio" name="pets" id="pets-nao" value="Não tenho pets">
+            <label class="level-label" for="pets-nao">Não tenho</label>
+          </div>
+          <div class="level-opt">
+            <input type="radio" name="pets" id="pets-ja-tive" value="Já tive pets">
+            <label class="level-label" for="pets-ja-tive">Já tive</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 2 — TALENTOS -->
+    <div class="section" id="sec-2">
+      <div class="section-header">
+        <div class="section-tag"><span>✨</span> Passo 2 de 4</div>
+        <div class="section-title">Qual é o seu talento?</div>
+        <div class="section-sub">Todo talento tem espaço aqui. Marque as áreas em que você tem habilidade, experiência ou vontade de aprender.</div>
+      </div>
+
+      <div class="field">
+        <label>Áreas de habilidade <span class="req">*</span> <span class="hint">— marque quantas quiser</span></label>
+        <div class="check-grid">
+          <div class="check-card">
+            <input type="checkbox" id="t1" name="talento" value="Marketing e redes sociais">
+            <label class="check-label" for="t1">
+              <span class="check-icon">📱</span>
+              <div class="check-text"><div class="check-title">Marketing & Redes Sociais</div><div class="check-desc">Instagram, TikTok, conteúdo, estratégia</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="t2" name="talento" value="Design gráfico">
+            <label class="check-label" for="t2">
+              <span class="check-icon">🎨</span>
+              <div class="check-text"><div class="check-title">Design Gráfico</div><div class="check-desc">Artes, identidade visual, peças digitais</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="t3" name="talento" value="Fotografia e vídeo">
+            <label class="check-label" for="t3">
+              <span class="check-icon">📸</span>
+              <div class="check-text"><div class="check-title">Fotografia & Vídeo</div><div class="check-desc">Registros, edição, produção de conteúdo</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="t4" name="talento" value="Veterinária ou medicina animal">
+            <label class="check-label" for="t4">
+              <span class="check-icon">🩺</span>
+              <div class="check-text"><div class="check-title">Veterinária</div><div class="check-desc">Atendimento, saúde e cuidado animal</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="t5" name="talento" value="Educação e conscientização">
+            <label class="check-label" for="t5">
+              <span class="check-icon">📚</span>
+              <div class="check-text"><div class="check-title">Educação</div><div class="check-desc">Palestras, workshops, ações educativas</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="t6" name="talento" value="Captação de recursos e parcerias">
+            <label class="check-label" for="t6">
+              <span class="check-icon">🤝</span>
+              <div class="check-text"><div class="check-title">Captação & Parcerias</div><div class="check-desc">Empresas, doações, patrocínios</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="t7" name="talento" value="Produção de eventos">
+            <label class="check-label" for="t7">
+              <span class="check-icon">🎪</span>
+              <div class="check-text"><div class="check-title">Produção de Eventos</div><div class="check-desc">Feiras, bazares, campanhas presenciais</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="t8" name="talento" value="Tecnologia e desenvolvimento">
+            <label class="check-label" for="t8">
+              <span class="check-icon">💻</span>
+              <div class="check-text"><div class="check-title">Tecnologia</div><div class="check-desc">Sites, sistemas, automação</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="t9" name="talento" value="Redação e copywriting">
+            <label class="check-label" for="t9">
+              <span class="check-icon">✍️</span>
+              <div class="check-text"><div class="check-title">Redação & Copy</div><div class="check-desc">Textos, legendas, artigos, comunicação</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="t10" name="talento" value="Jurídico e administrativo">
+            <label class="check-label" for="t10">
+              <span class="check-icon">⚖️</span>
+              <div class="check-text"><div class="check-title">Jurídico & Administrativo</div><div class="check-desc">Contratos, documentação, gestão</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="t11" name="talento" value="Transporte e logística">
+            <label class="check-label" for="t11">
+              <span class="check-icon">🚗</span>
+              <div class="check-text"><div class="check-title">Transporte & Logística</div><div class="check-desc">Resgates, entregas, deslocamentos</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="t12" name="talento" value="Outro talento">
+            <label class="check-label" for="t12">
+              <span class="check-icon">🌟</span>
+              <div class="check-text"><div class="check-title">Outro talento</div><div class="check-desc">Tenho algo especial a oferecer!</div></div>
+            </label>
+          </div>
+        </div>
+        <div class="error-msg" id="err-talento">Selecione ao menos uma área.</div>
+      </div>
+
+      <div class="field" id="outro-talento-field" style="display:none">
+        <label>Qual outro talento você tem?</label>
+        <input type="text" id="outro-talento" placeholder="Descreva sua habilidade">
+      </div>
+
+      <div class="field">
+        <label>Como você avalia sua experiência com proteção animal?</label>
+        <div class="level-options">
+          <div class="level-opt">
+            <input type="radio" name="exp" id="exp1" value="Nenhuma experiência ainda">
+            <label class="level-label" for="exp1">Iniciante</label>
+          </div>
+          <div class="level-opt">
+            <input type="radio" name="exp" id="exp2" value="Tenho alguma experiência">
+            <label class="level-label" for="exp2">Intermediário</label>
+          </div>
+          <div class="level-opt">
+            <input type="radio" name="exp" id="exp3" value="Tenho muita experiência">
+            <label class="level-label" for="exp3">Experiente</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 3 — COMO QUER AJUDAR -->
+    <div class="section" id="sec-3">
+      <div class="section-header">
+        <div class="section-tag"><span>💚</span> Passo 3 de 4</div>
+        <div class="section-title">Como você quer contribuir?</div>
+        <div class="section-sub">Entenda melhor as formas de atuação e escolha aquelas que combinam com você.</div>
+      </div>
+
+      <div class="field">
+        <label>Tipo de voluntariado <span class="req">*</span> <span class="hint">— pode escolher mais de um</span></label>
+        <div class="check-grid">
+          <div class="check-card">
+            <input type="checkbox" id="v1" name="voluntariado" value="Voluntariado presencial em eventos">
+            <label class="check-label" for="v1">
+              <span class="check-icon">🎪</span>
+              <div class="check-text"><div class="check-title">Presencial em eventos</div><div class="check-desc">Feiras de adoção, campanhas e ações de campo</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="v2" name="voluntariado" value="Voluntariado remoto">
+            <label class="check-label" for="v2">
+              <span class="check-icon">🏠</span>
+              <div class="check-text"><div class="check-title">Remoto / Online</div><div class="check-desc">Redes sociais, design, redação, suporte digital</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="v3" name="voluntariado" value="Ajuda em resgates">
+            <label class="check-label" for="v3">
+              <span class="check-icon">🐾</span>
+              <div class="check-text"><div class="check-title">Apoio a resgates</div><div class="check-desc">Ajuda em campo, transporte e acolhimento</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="v4" name="voluntariado" value="Lar temporário">
+            <label class="check-label" for="v4">
+              <span class="check-icon">🏡</span>
+              <div class="check-text"><div class="check-title">Lar temporário</div><div class="check-desc">Acolher um animal até encontrar família adotante</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="v5" name="voluntariado" value="Captação de doações e parceiros">
+            <label class="check-label" for="v5">
+              <span class="check-icon">💰</span>
+              <div class="check-text"><div class="check-title">Captação de doações</div><div class="check-desc">Contato com empresas, parceiros e apoiadores</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="v6" name="voluntariado" value="Educação e conscientização">
+            <label class="check-label" for="v6">
+              <span class="check-icon">📢</span>
+              <div class="check-text"><div class="check-title">Educação ambiental</div><div class="check-desc">Palestras, rodas de conversa e ações escolares</div></div>
+            </label>
+          </div>
+        </div>
+        <div class="error-msg" id="err-voluntariado">Escolha ao menos uma forma de contribuição.</div>
+      </div>
+
+      <hr class="field-divider">
+
+      <div class="field">
+        <label>Conte sua história <span class="req">*</span></label>
+        <textarea id="historia" placeholder="Por que você quer ser voluntário da Aliança do Bem? O que te motivou? Tem alguma experiência com animais ou causas sociais que queira compartilhar?" maxlength="600"></textarea>
+        <div class="char-counter"><span id="hist-count">0</span>/600 caracteres</div>
+        <div class="error-msg" id="err-historia">Conte um pouco sobre sua motivação (mínimo 30 caracteres).</div>
+      </div>
+
+      <div class="field">
+        <label>O que você gostaria de aprender ou desenvolver como voluntário? <span class="hint">(opcional)</span></label>
+        <textarea id="aprender" placeholder="Ex: quero aprender mais sobre proteção animal, gestão de ONGs, fotografar animais..." maxlength="300" style="min-height:80px"></textarea>
+        <div class="char-counter"><span id="aprender-count">0</span>/300 caracteres</div>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 4 — DISPONIBILIDADE -->
+    <div class="section" id="sec-4">
+      <div class="section-header">
+        <div class="section-tag"><span>📅</span> Passo 4 de 4</div>
+        <div class="section-title">Quando você pode?</div>
+        <div class="section-sub">Nos ajude a entender sua disponibilidade para que possamos encaixar você no melhor projeto.</div>
+      </div>
+
+      <div class="field">
+        <label>Dias disponíveis <span class="req">*</span> <span class="hint">— marque quantos quiser</span></label>
+        <div class="avail-grid">
+          <div class="avail-card"><input type="checkbox" id="d1" name="dia" value="Segunda"><label class="avail-label" for="d1">Seg</label></div>
+          <div class="avail-card"><input type="checkbox" id="d2" name="dia" value="Terça"><label class="avail-label" for="d2">Ter</label></div>
+          <div class="avail-card"><input type="checkbox" id="d3" name="dia" value="Quarta"><label class="avail-label" for="d3">Qua</label></div>
+          <div class="avail-card"><input type="checkbox" id="d4" name="dia" value="Quinta"><label class="avail-label" for="d4">Qui</label></div>
+          <div class="avail-card"><input type="checkbox" id="d5" name="dia" value="Sexta"><label class="avail-label" for="d5">Sex</label></div>
+          <div class="avail-card"><input type="checkbox" id="d6" name="dia" value="Sábado"><label class="avail-label" for="d6">Sáb</label></div>
+          <div class="avail-card"><input type="checkbox" id="d7" name="dia" value="Domingo"><label class="avail-label" for="d7">Dom</label></div>
+          <div class="avail-card"><input type="checkbox" id="d8" name="dia" value="A combinar"><label class="avail-label" for="d8">A combinar</label></div>
+        </div>
+        <div class="error-msg" id="err-dia">Selecione ao menos um dia disponível.</div>
+      </div>
+
+      <div class="field">
+        <label>Período do dia <span class="req">*</span></label>
+        <div class="check-grid three">
+          <div class="check-card">
+            <input type="checkbox" id="p1" name="periodo" value="Manhã">
+            <label class="check-label" for="p1">
+              <span class="check-icon">🌅</span>
+              <div class="check-text"><div class="check-title">Manhã</div><div class="check-desc">6h às 12h</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="p2" name="periodo" value="Tarde">
+            <label class="check-label" for="p2">
+              <span class="check-icon">☀️</span>
+              <div class="check-text"><div class="check-title">Tarde</div><div class="check-desc">12h às 18h</div></div>
+            </label>
+          </div>
+          <div class="check-card">
+            <input type="checkbox" id="p3" name="periodo" value="Noite">
+            <label class="check-label" for="p3">
+              <span class="check-icon">🌙</span>
+              <div class="check-text"><div class="check-title">Noite</div><div class="check-desc">18h às 22h</div></div>
+            </label>
+          </div>
+        </div>
+        <div class="error-msg" id="err-periodo">Selecione ao menos um período.</div>
+      </div>
+
+      <div class="field">
+        <label>Quantas horas por semana você pode dedicar?</label>
+        <div class="level-options">
+          <div class="level-opt">
+            <input type="radio" name="horas" id="h1" value="Até 2 horas por semana">
+            <label class="level-label" for="h1">Até 2h</label>
+          </div>
+          <div class="level-opt">
+            <input type="radio" name="horas" id="h2" value="De 2 a 5 horas por semana">
+            <label class="level-label" for="h2">2 a 5h</label>
+          </div>
+          <div class="level-opt">
+            <input type="radio" name="horas" id="h3" value="De 5 a 10 horas por semana">
+            <label class="level-label" for="h3">5 a 10h</label>
+          </div>
+          <div class="level-opt">
+            <input type="radio" name="horas" id="h4" value="Mais de 10 horas por semana">
+            <label class="level-label" for="h4">10h+</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Alguma observação importante? <span class="hint">(opcional)</span></label>
+        <textarea id="obs" placeholder="Ex: tenho carro disponível para resgates, falo inglês, sou formado em veterinária, tenho restrições de saúde..." maxlength="300" style="min-height:80px"></textarea>
+        <div class="char-counter"><span id="obs-count">0</span>/300 caracteres</div>
+      </div>
+
+      <div class="field" style="background:var(--green-pale);border-radius:10px;padding:14px 16px">
+        <label style="font-size:12px;color:var(--green-main);cursor:pointer;display:flex;align-items:flex-start;gap:8px;margin-bottom:0">
+          <input type="checkbox" id="lgpd" style="width:auto;flex-shrink:0;margin-top:2px">
+          <span>Autorizo o uso dos meus dados pela Aliança do Bem exclusivamente para fins de voluntariado, de acordo com a LGPD. Não compartilharemos suas informações com terceiros.</span>
+        </label>
+        <div class="error-msg" id="err-lgpd">Você precisa aceitar os termos para continuar.</div>
+      </div>
+    </div>
+
+    <!-- SUCESSO -->
+    <div class="success" id="success">
+      <div class="success-icon">🐾</div>
+      <h2>Bem-vindo à família!</h2>
+      <p>Recebemos sua inscrição com muito carinho. Nossa equipe vai analisar seu perfil e entrar em contato em breve pelo WhatsApp ou e-mail que você informou.</p>
+      <p class="success-share">Enquanto isso, siga a gente no Instagram <strong>@aliancadobem.org.br</strong> e acompanhe nosso trabalho! 💚</p>
+    </div>
+
+    <!-- BOTÕES -->
+    <div class="btn-row" id="btnRow">
+      <button class="btn-back" id="btnBack" onclick="back()" disabled>← Voltar</button>
+      <button class="btn-next" id="btnNext" onclick="next()">Próximo <span>→</span></button>
+    </div>
+
+  </div>
+
+  <div class="form-footer">
+    Seus dados são protegidos e usados apenas para fins de voluntariado.<br>
+    <a href="https://aliancadobem.org.br" target="_blank">aliancadobem.org.br</a> · <a href="https://instagram.com/aliancadobem.org.br" target="_blank">@aliancadobem.org.br</a>
+  </div>
+
+</div>
+
+<script>
+let currentStep = 1;
+const totalSteps = 4;
+
+function updateProgress() {
+  for (let i = 1; i <= totalSteps; i++) {
+    const dot = document.getElementById('dot-' + i);
+    if (i < currentStep) { dot.className = 'step-dot done'; dot.innerHTML = '✓'; }
+    else if (i === currentStep) { dot.className = 'step-dot active'; dot.innerHTML = i; }
+    else { dot.className = 'step-dot'; dot.innerHTML = i; }
+    if (i < totalSteps) {
+      document.getElementById('line-' + i).className = 'step-line' + (i < currentStep ? ' done' : '');
+    }
+  }
+  document.getElementById('btnBack').disabled = currentStep === 1;
+  const btnNext = document.getElementById('btnNext');
+  if (currentStep === totalSteps) {
+    btnNext.innerHTML = 'Enviar inscrição 💚';
+    btnNext.className = 'btn-submit';
+  } else {
+    btnNext.innerHTML = 'Próximo <span>→</span>';
+    btnNext.className = 'btn-next';
+  }
+  // scroll progress bar
+  const pct = ((currentStep - 1) / (totalSteps - 1)) * 100;
+  document.getElementById('scrollBar').style.width = pct + '%';
+}
+
+function validate() {
+  let ok = true;
+  const clearErr = id => { document.getElementById(id).classList.remove('show'); };
+  const showErr = id => { document.getElementById(id).classList.add('show'); ok = false; };
+
+  if (currentStep === 1) {
+    const nome = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const wpp = document.getElementById('whatsapp').value.trim();
+    const cidade = document.getElementById('cidade').value.trim();
+    const idade = document.getElementById('idade').value;
+    nome ? clearErr('err-nome') : showErr('err-nome');
+    /\S+@\S+\.\S+/.test(email) ? clearErr('err-email') : showErr('err-email');
+    wpp.length >= 8 ? clearErr('err-whatsapp') : showErr('err-whatsapp');
+    cidade ? clearErr('err-cidade') : showErr('err-cidade');
+    idade ? clearErr('err-idade') : showErr('err-idade');
+  }
+  if (currentStep === 2) {
+    const checked = document.querySelectorAll('input[name=talento]:checked').length;
+    checked > 0 ? clearErr('err-talento') : showErr('err-talento');
+  }
+  if (currentStep === 3) {
+    const checked = document.querySelectorAll('input[name=voluntariado]:checked').length;
+    checked > 0 ? clearErr('err-voluntariado') : showErr('err-voluntariado');
+    const hist = document.getElementById('historia').value.trim();
+    hist.length >= 30 ? clearErr('err-historia') : showErr('err-historia');
+  }
+  if (currentStep === 4) {
+    const dias = document.querySelectorAll('input[name=dia]:checked').length;
+    dias > 0 ? clearErr('err-dia') : showErr('err-dia');
+    const periodos = document.querySelectorAll('input[name=periodo]:checked').length;
+    periodos > 0 ? clearErr('err-periodo') : showErr('err-periodo');
+    const lgpd = document.getElementById('lgpd').checked;
+    lgpd ? clearErr('err-lgpd') : showErr('err-lgpd');
+  }
+  return ok;
+}
+
+function next() {
+  if (!validate()) { window.scrollTo({top: 300, behavior:'smooth'}); return; }
+  if (currentStep < totalSteps) {
+    document.getElementById('sec-' + currentStep).classList.remove('visible');
+    currentStep++;
+    document.getElementById('sec-' + currentStep).classList.add('visible');
+    updateProgress();
+    window.scrollTo({top: 200, behavior:'smooth'});
+  } else {
+    submit();
+  }
+}
+
+function back() {
+  if (currentStep > 1) {
+    document.getElementById('sec-' + currentStep).classList.remove('visible');
+    currentStep--;
+    document.getElementById('sec-' + currentStep).classList.add('visible');
+    updateProgress();
+    window.scrollTo({top: 200, behavior:'smooth'});
+  }
+}
+
+// ── COLE A URL DO SEU GOOGLE APPS SCRIPT AQUI ──────────────────────────────
+const SCRIPT_URL = (typeof APPS_SCRIPT_URL !== 'undefined') ? APPS_SCRIPT_URL : '';
+// ────────────────────────────────────────────────────────────────────────────
+
+function coletarDados() {
+  const get = id => (document.getElementById(id)?.value || '').trim();
+  const checks = name => [...document.querySelectorAll(`input[name=${name}]:checked`)].map(e => e.value).join(', ');
+  const radio = name => { const el = document.querySelector(`input[name=${name}]:checked`); return el ? el.value : ''; };
+
+  return {
+    'Data e Hora'       : new Date().toLocaleString('pt-BR'),
+    'Nome'              : get('nome'),
+    'E-mail'            : get('email'),
+    'WhatsApp'          : get('whatsapp'),
+    'Cidade'            : get('cidade'),
+    'Faixa Etária'      : get('idade'),
+    'Como nos encontrou': get('origem'),
+    'Tem pets'          : radio('pets'),
+    'Talentos'          : checks('talento'),
+    'Outro talento'     : get('outro-talento'),
+    'Exp. com animais'  : radio('exp'),
+    'Tipo de voluntariado': checks('voluntariado'),
+    'Motivação'         : get('historia'),
+    'Quer aprender'     : get('aprender'),
+    'Dias disponíveis'  : checks('dia'),
+    'Períodos'          : checks('periodo'),
+    'Horas por semana'  : radio('horas'),
+    'Observações'       : get('obs'),
+  };
+}
+
+function setLoading(on) {
+  const btn = document.getElementById('btnNext');
+  btn.disabled = on;
+  btn.innerHTML = on
+    ? '<span style="display:inline-flex;align-items:center;gap:8px"><span style="width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block"></span>Enviando...</span>'
+    : 'Enviar inscrição 💚';
+}
+
+async function submit() {
+  setLoading(true);
+
+  const dados = coletarDados();
+
+  try {
+    await fetch(SCRIPT_URL, {
+      method : 'POST',
+      mode   : 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body   : JSON.stringify(dados),
+    });
+  } catch (e) {
+    // no-cors sempre resolve; erros de rede chegam aqui
+    console.warn('Aviso de envio:', e);
+  }
+
+  // Mostrar tela de sucesso independente (no-cors não retorna resposta legível)
+  for (let i = 1; i <= 4; i++) document.getElementById('sec-' + i).classList.remove('visible');
+  document.getElementById('btnRow').style.display = 'none';
+  document.getElementById('success').classList.add('visible');
+  document.getElementById('scrollBar').style.width = '100%';
+  window.scrollTo({ top: 200, behavior: 'smooth' });
+}
+
+// Char counters
+document.getElementById('historia').addEventListener('input', function() {
+  document.getElementById('hist-count').textContent = this.value.length;
+});
+document.getElementById('aprender').addEventListener('input', function() {
+  document.getElementById('aprender-count').textContent = this.value.length;
+});
+document.getElementById('obs').addEventListener('input', function() {
+  document.getElementById('obs-count').textContent = this.value.length;
+});
+
+// Show outro talento field
+document.getElementById('t12').addEventListener('change', function() {
+  document.getElementById('outro-talento-field').style.display = this.checked ? 'block' : 'none';
+});
+
+// Scroll progress
+window.addEventListener('scroll', () => {
+  if (currentStep < totalSteps) return;
+});
+
+updateProgress();
+</script>
+</body>
+</html>
